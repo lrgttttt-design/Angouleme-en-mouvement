@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angoulême en Mouvement - Accès Sport</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CHARTE GRAPHIQUE (MODERNE & SOBRE) --- */
+        :root {
+            --bg-dark: #0f172a;       /* Bleu Nuit Profond (Fond) */
+            --card-bg: #1e293b;       /* Bleu Ardoise (Cartes) */
+            --primary: #3b82f6;       /* Bleu Royal Électrique (Action) */
+            --accent: #0ea5e9;        /* Bleu Cyan (Détails) */
+            --text-main: #f8fafc;     /* Blanc très clair (Texte principal) */
+            --text-muted: #94a3b8;    /* Gris bleuté (Texte secondaire) */
+            --highlight: #fbbf24;     /* Or (Pour l'argent uniquement) */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        section { padding: 100px 0; }
+        
+        .section-title { 
+            text-align: center; font-size: 2.5rem; margin-bottom: 15px; color: var(--text-main);
+        }
+        .section-subtitle {
+            text-align: center; color: var(--text-muted); margin-bottom: 60px; font-size: 1.15rem; max-width: 800px; margin-left: auto; margin-right: auto;
+        }
+
+        /* Highlight argent */
+        .money-tag { color: var(--highlight); font-weight: 800; }
+
+        /* --- HEADER HERO (Nouvelle image de fond) --- */
+        header {
+            min-height: 92vh;
+            /* Nouvelle belle photo d'ambiance sport/dynamique */
+            background: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1486218119243-13883505764c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 60px;
+        }
+
+        header h1 {
+            font-size: 4rem;
+            margin-bottom: 25px;
+            line-height: 1.1;
+            background: -webkit-linear-gradient(135deg, var(--text-main), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-price {
+            font-size: 5rem; color: var(--highlight); display: block; margin: 20px 0; font-weight: 900;
+            text-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+        }
+
+        .btn {
+            display: inline-block; padding: 18px 45px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white; text-decoration: none; border-radius: 12px;
+            font-weight: 700; font-size: 1.1rem; transition: all 0.3s ease;
+            border: none; cursor: pointer; margin-top: 30px;
+            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.6);
+        }
+        .btn:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.8); }
+
+        /* --- STATS --- */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; text-align: center; }
+        .stat-card {
+            background: var(--card-bg); padding: 50px 30px; border-radius: 20px;
+            border-bottom: 6px solid var(--primary); box-shadow: 0 10px 30px -15px rgba(0,0,0,0.3);
+        }
+        .stat-number { font-size: 3.5rem; font-weight: 900; color: var(--primary); display: block; margin-bottom: 15px; line-height: 1;}
+
+        /* --- SOLUTIONS --- */
+        .solutions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 35px; }
+        .solution-card {
+            background-size: cover; background-position: center; height: 480px;
+            border-radius: 24px; position: relative; overflow: hidden;
+            cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .solution-card:hover { transform: translateY(-15px) scale(1.02); }
+        
+        /* Photos des cartes */
+        .card-1 { background-image: url(sport.jpg); } /* Équipe/Tech */
+        .card-2 { background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1404&q=80'); } /* Jeunes/École */
+        /* NOUVELLE PHOTO VILLE D'ANGOULEME */
+        .card-3 { background-image: url(image.jpg); background-position: bottom center; }
+
+        .card-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, var(--bg-dark) 10%, rgba(15, 23, 42, 0.4) 70%, rgba(15, 23, 42, 0.2) 100%);
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 35px;
+        }
+        .card-price-badge {
+            position: absolute; top: 25px; right: 25px;
+            background: var(--primary); color: white; font-weight: 800;
+            padding: 10px 20px; border-radius: 50px; font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.5);
+        }
+        .card-title { color: white; font-size: 2rem; margin-bottom: 15px; }
+        .card-cta { color: var(--accent); font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 20px; display: inline-block;}
+
+        /* --- SIMULATEUR --- */
+        .sim-container {
+            background: var(--card-bg); padding: 50px; border-radius: 24px;
+            max-width: 750px; margin: 0 auto;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .form-group { margin-bottom: 35px; }
+        label { display: block; margin-bottom: 15px; font-weight: 700; color: var(--text-main); font-size: 1.1rem;}
+        
+        input[type="range"] {
+            width: 100%; height: 10px; background: #334155; border-radius: 10px; outline: none; -webkit-appearance: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 28px; height: 28px; border-radius: 50%; 
+            background: var(--primary); cursor: pointer; transition: 0.2s;
+            border: 3px solid var(--bg-dark); box-shadow: 0 0 10px var(--primary);
+        }
+
+        .result-box {
+            margin-top: 30px; padding: 25px; border-radius: 12px;
+            text-align: center; font-weight: 700; display: none; font-size: 1.1rem;
+        }
+        .result-bad { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 2px solid #ef4444; }
+        .result-good { background: rgba(34, 197, 94, 0.15); color: #86efac; border: 2px solid #22c55e; }
+
+        /* --- BUDGET --- */
+        .budget-item { margin-bottom: 30px; }
+        .bar-container {
+            background: #334155; border-radius: 8px; height: 16px;
+            width: 100%; overflow: hidden; margin-top: 12px;
+        }
+        .bar {
+            height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%; transition: width 1.5s ease-in-out; border-radius: 8px;
+        }
+        .budget-label { display: flex; justify-content: space-between; font-size: 1.05rem; font-weight: 600; }
+
+        /* --- FORMULAIRE INSCRIPTION --- */
+        .form-container { max-width: 650px; margin: 0 auto; background: var(--card-bg); padding: 50px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.05);}
+        .input-group { margin-bottom: 25px; }
+        .input-group label { display: block; margin-bottom: 10px; color: var(--text-main); font-weight: 600; font-size: 0.95rem;}
+        .input-group input, .input-group select {
+            width: 100%; padding: 18px; border-radius: 12px; border: 2px solid #334155;
+            background: var(--bg-dark); color: white; font-size: 1rem; transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        .input-group input:focus, .input-group select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2); }
+
+        /* --- MODALES --- */
+        .modal {
+            display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(15, 23, 42, 0.98); backdrop-filter: blur(10px);
+            align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal-content {
+            background-color: var(--card-bg); padding: 60px; border-radius: 24px;
+            width: 100%; max-width: 1000px; max-height: 95vh; overflow-y: auto;
+            position: relative; animation: slideUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.8);
+        }
+        @keyframes slideUp { from { transform: translateY(80px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .close-btn { position: absolute; top: 30px; right: 35px; color: var(--text-muted); font-size: 40px; cursor: pointer; transition: 0.2s; line-height: 1;}
+        .close-btn:hover { color: var(--primary); transform: rotate(90deg); }
+        
+        .club-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 40px; }
+        .list-item {
+            background: rgba(255,255,255,0.03); padding: 25px; border-radius: 16px;
+            border-left: 5px solid var(--primary); transition: all 0.3s ease;
+        }
+        .list-item:hover { background: rgba(255,255,255,0.07); transform: translateX(5px); border-color: var(--accent);}
+        .list-item strong { display: block; font-size: 1.15rem; margin-bottom: 8px; color: white; }
+        .list-item small { color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;}
+
+        footer { background: #020617; padding: 80px 0; text-align: center; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); margin-top: 100px; }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.8rem; }
+            .header-price { font-size: 4rem; }
+            .section-title { font-size: 2rem; }
+            .modal-content { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Angoulême<br>En Mouvement</h1>
+            <p style="font-size: 1.4rem; color: #cbd5e1; max-width: 750px; margin: 0 auto; font-weight: 300;">
+                Le projet qui investit dans votre santé. Accédez au sport, financez votre licence et bougez dans votre ville.
+            </p>
+            <div style="margin: 50px 0;">
+                <span style="font-size: 1.2rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); font-weight: 700;">Aide Individuelle Directe</span>
+                <span class="header-price">135 €</span>
+                <span style="font-size: 1.3rem; font-weight: 600;">pour financer votre inscription en club.</span>
+            </div>
+            <a href="#inscription" class="btn">Effectuer ma demande en ligne</a>
+        </div>
+    </header>
+
+    <section id="constat">
+        <div class="container">
+            <h2 class="section-title">Le Constat</h2>
+            <p class="section-subtitle">Pourquoi il est urgent de se remettre en mouvement à Angoulême.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">4h00</span>
+                    <p>Temps d'écran quotidien moyen chez les 15-18 ans (hors temps scolaire).</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">119e</span>
+                    <p>Rang mondial de la France pour le niveau d'activité physique des adolescents.</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number money-tag">135 €</span>
+                    <p>Montant moyen de la subvention débloquée par le dispositif pour vous aider.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="solutions">
+        <div class="container">
+            <h2 class="section-title">Nos Dispositifs</h2>
+            <p class="section-subtitle">Trois solutions concrètes adaptées à votre emploi du temps et vos envies.</p>
+            
+            <div class="solutions-grid">
+                <div class="solution-card card-1" onclick="openModal('modal-sport')">
+                    <div class="card-price-badge">135 € OFFERTS</div>
+                    <div class="card-overlay">
+                        <h3 class="card-title">Le Coupon Sport</h3>
+                        <p style="color: #cbd5e1; font-size: 1.1rem;">Une aide financière directe valable dans plus de 50 clubs partenaires.</p>
+                        <span class="card-cta">Voir les clubs éligibles &rarr;</span>
+                    </div>
+                </div>
+
+                <div class="solution-card card-2" onclick="openModal('modal-lycee')">
+                    <div class="card-overlay">
+                        <h3 class="card-title">Au Lycée</h3>
+                        <p style="color: #cbd5e1; font-size: 1.1rem;">Dispositif "+90min" : pratiquez gratuitement sur votre pause méridienne.</p>
+                        <span class="card-cta">Voir les établissements &rarr;</span>
+                    </div>
+                </div>
+
+                <div class="solution-card card-3" onclick="openModal('modal-ville')">
+                    <div class="card-overlay">
+                        <h3 class="card-title">En Ville</h3>
+                        <p style="color: #cbd5e1; font-size: 1.1rem;">Angoulême est votre terrain de jeu : parcours, escaliers et spots connectés.</p>
+                        <span class="card-cta">Découvrir les spots &rarr;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="simulateur" style="background-color: #0c1222;">
+        <div class="container">
+            <h2 class="section-title">Diagnostic d'Activité</h2>
+            <p class="section-subtitle">Évaluez votre niveau actuel par rapport aux recommandations santé.</p>
+            
+            <div class="sim-container">
+                <div class="form-group">
+                    <label>Temps d'écran journalier estimé : <span id="val-ecran" style="color:var(--primary); font-size:1.3em; margin-left: 10px;">2</span> h</label>
+                    <input type="range" id="input-ecran" min="0" max="10" value="2">
+                </div>
+                <div class="form-group">
+                    <label>Activité physique journalière (marche comprise) : <span id="val-sport" style="color:var(--accent); font-size:1.3em; margin-left: 10px;">30</span> min</label>
+                    <input type="range" id="input-sport" min="0" max="120" value="30" step="10">
+                </div>
+                <button class="btn" style="width:100%; margin-top: 10px;" onclick="calculerScore()">Lancer le diagnostic</button>
+                <div id="resultat" class="result-box"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="budget">
+        <div class="container">
+            <h2 class="section-title">Transparence Financière</h2>
+            <p class="section-subtitle">Un investissement total de <strong>650 000 € / an</strong> pour la jeunesse du territoire.</p>
+            
+            <div style="max-width: 850px; margin: 0 auto; background: var(--card-bg); padding: 40px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.05);">
+                <div class="budget-item">
+                    <div class="budget-label"><span>Grand Angoulême</span> <span>195 000 €</span></div>
+                    <div class="bar-container"><div class="bar" data-width="30%"></div></div>
+                </div>
+                <div class="budget-item">
+                    <div class="budget-label"><span>Caisse d'Allocations Familiales (CAF)</span> <span>162 500 €</span></div>
+                    <div class="bar-container"><div class="bar" data-width="25%"></div></div>
+                </div>
+                <div class="budget-item">
+                    <div class="budget-label"><span>État (Politique de la Ville)</span> <span>130 000 €</span></div>
+                    <div class="bar-container"><div class="bar" data-width="20%"></div></div>
+                </div>
+                <div class="budget-item">
+                    <div class="budget-label"><span>Région Nouvelle-Aquitaine</span> <span>97 500 €</span></div>
+                    <div class="bar-container"><div class="bar" data-width="15%"></div></div>
+                </div>
+                <div class="budget-item">
+                    <div class="budget-label"><span>Mécénat & Entreprises Locales</span> <span>65 000 €</span></div>
+                    <div class="bar-container"><div class="bar" data-width="10%"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="inscription">
+        <div class="container">
+            <h2 class="section-title">Demande de Dossier</h2>
+            <p class="section-subtitle">Remplissez ce formulaire pour vérifier votre éligibilité et recevoir votre code.</p>
+            
+            <div class="form-container">
+                <form onsubmit="event.preventDefault(); alert('✅ Votre pré-inscription est validée ! Vous allez recevoir votre dossier et votre code unique par email dans les prochaines 24h.');">
+                    <div class="input-group">
+                        <label>Prénom & Nom</label>
+                        <input type="text" placeholder="Ex: Thomas Martin" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Établissement Scolaire Actuel</label>
+                        <select>
+                            <option value="" disabled selected>Choisir dans la liste...</option>
+                            <option>Lycée Guez de Balzac</option>
+                            <option>Lycée Marguerite de Valois</option>
+                            <option>Lycée Lisa (Image et Son)</option>
+                            <option>Lycée Charles Coulomb</option>
+                            <option>Lycée Saint-Paul</option>
+                            <option>Lycée Pro Jean Caillaud</option>
+                            <option>Lycée Pro Jean-Albert Grégoire</option>
+                            <option>Lycée St-Joseph l'Amandier</option>
+                            <option>Lycée de Sillac</option>
+                            <option>Autre / Non scolarisé</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Email de contact (pour réception du code)</label>
+                        <input type="email" placeholder="votre@email.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Discipline souhaitée (Optionnel)</label>
+                        <select>
+                            <option>Je ne sais pas encore</option>
+                            <option>Sports Collectifs (Rugby, Foot, Hand, Basket...)</option>
+                            <option>Sports de Combat (Judo, Boxe, Escrime...)</option>
+                            <option>Sports Individuels (Athlé, Natation, Tennis, Gym...)</option>
+                            <option>Sports Nature / Urbain (Escalade, Aviron...)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn" style="width:100%; margin-top: 10px;">Valider ma demande d'aide</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <h3 style="color: white; margin-bottom: 20px;">Angoulême en Mouvement</h3>
+            <p>© 2024 - Projet d'aide à l'accès au sport pour la jeunesse.</p>
+            <p style="font-size: 0.9rem; margin-top: 15px; opacity: 0.6;">Un projet soutenu par le Grand Angoulême, la CAF, l'État et la Région Nouvelle-Aquitaine.</p>
+        </div>
+    </footer>
+
+    <div id="modal-sport" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal-sport')">&times;</span>
+            <h2 style="color:var(--primary); font-size: 2.5rem;">Clubs Partenaires (135€)</h2>
+            <p style="color: var(--text-muted); font-size: 1.2rem; margin-bottom: 30px;">Utilisez votre coupon dans l'un de ces clubs principaux d'Angoulême :</p>
+            
+            <div class="club-list">
+                <div class="list-item">🏉 <strong>SA XV Charente</strong><small>Rugby - Stade Chanzy</small></div>
+                <div class="list-item">⚽ <strong>Angoulême CFC</strong><small>Football - Stade Lebon</small></div>
+                <div class="list-item">🤾‍♀️ <strong>ACH Handball</strong><small>Handball Féminin - D2F</small></div>
+                <div class="list-item">🤾‍♂️ <strong>ETEC Handball</strong><small>Handball Masculin - N1</small></div>
+                <div class="list-item">🏀 <strong>Angoulême Basket</strong><small>Basket-ball (ACBB)</small></div>
+                <div class="list-item">🏃 <strong>G2A Athlétisme</strong><small>Stade Léonide Lacroix</small></div>
+                <div class="list-item">🥋 <strong>Angoulême Judo</strong><small>Dojo Ma Campagne</small></div>
+                <div class="list-item">🥊 <strong>Boxing Club</strong><small>Boxe Anglaise</small></div>
+                <div class="list-item">🏊 <strong>ANC Natation</strong><small>Centre Nautilis</small></div>
+                <div class="list-item">🤺 <strong>Cercle de l'Épée</strong><small>Escrime - Salle Taillefer</small></div>
+                <div class="list-item">🚣 <strong>Aviron Club</strong><small>Plan d'eau St Yrieix</small></div>
+                <div class="list-item">🏓 <strong>TTGF</strong><small>Tennis de Table</small></div>
+                <div class="list-item">🎾 <strong>TCMA</strong><small>Tennis - Petit Fresquet</small></div>
+                <div class="list-item">🧗 <strong>Roc et Blocs</strong><small>Escalade en salle</small></div>
+                <div class="list-item">🤸 <strong>La Cognaçaise</strong><small>Gymnastique</small></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-lycee" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal-lycee')">&times;</span>
+            <h2 style="color:var(--accent); font-size: 2.5rem;">Lycées Partenaires</h2>
+            <p style="color: var(--text-muted); font-size: 1.2rem; margin-bottom: 30px;">Établissements proposant le dispositif "+90min" :</p>
+            <div class="club-list">
+                <div class="list-item">🎓 <strong>Lycée Guez de Balzac</strong><small>Général - Centre Ville</small></div>
+                <div class="list-item">🎓 <strong>Lycée Marguerite de Valois</strong><small>Général & Techno - L'Houmeau</small></div>
+                <div class="list-item">🎬 <strong>Lycée LISA</strong><small>Image et Son - St-Cybard</small></div>
+                <div class="list-item">🔬 <strong>Lycée Charles Coulomb</strong><small>Sciences & Indus - Ma Campagne</small></div>
+                <div class="list-item">🏛️ <strong>Lycée Saint-Paul</strong><small>Enseignement Privé</small></div>
+                <div class="list-item">🔨 <strong>Lycée Pro Jean Caillaud</strong><small>Métiers d'Art & Indus - Ruelle</small></div>
+                <div class="list-item">🚗 <strong>Lycée Pro J.A. Grégoire</strong><small>Transports - Soyaux</small></div>
+                <div class="list-item">🏗️ <strong>Lycée de Sillac</strong><small>Métiers du Bâtiment</small></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-ville" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal-ville')">&times;</span>
+            <h2 style="color:#fff; font-size: 2.5rem;">Spots Urbains</h2>
+            <p style="color: var(--text-muted); font-size: 1.2rem; margin-bottom: 30px;">Accès libre et gratuit dans Angoulême :</p>
+            <div class="club-list">
+                <div class="list-item">📍 <strong>Jardin Vert</strong><small>Escaliers Connectés (Défi QR Code)</small></div>
+                <div class="list-item">📍 <strong>Coulée Verte</strong><small>Parcours Running 10km (Bords de Charente)</small></div>
+                <div class="list-item">📍 <strong>Plan d'eau St Yrieix</strong><small>Street Workout & Boucle Jogging</small></div>
+                <div class="list-item">📍 <strong>Parc de Frégeneuil</strong><small>Parcours Santé & Détente</small></div>
+                <div class="list-item">📍 <strong>Les Remparts</strong><small>Circuit "Marche Rapide & Dénivelé"</small></div>
+                <div class="list-item">📍 <strong>Parvis Magelis</strong><small>Zone Skate & Chill (St-Cybard)</small></div>
+                <div class="list-item">📍 <strong>Petit Fresquet</strong><small>Parcours Nature & Trail</small></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animation des Barres de Budget au chargement
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const bars = document.querySelectorAll('.bar');
+                bars.forEach(bar => { bar.style.width = bar.getAttribute('data-width'); });
+            }, 300); // Petit délai pour l'effet visuel
+        });
+
+        // Logique du Simulateur
+        const inputEcran = document.getElementById('input-ecran');
+        const valEcran = document.getElementById('val-ecran');
+        const inputSport = document.getElementById('input-sport');
+        const valSport = document.getElementById('val-sport');
+        const resultatBox = document.getElementById('resultat');
+
+        inputEcran.addEventListener('input', function() { valEcran.textContent = this.value; });
+        inputSport.addEventListener('input', function() { valSport.textContent = this.value; });
+
+        function calculerScore() {
+            let ecran = parseInt(inputEcran.value);
+            let sport = parseInt(inputSport.value);
+            let message = "";
+            let className = "";
+
+            if (sport >= 60 && ecran <= 3) {
+                message = "✅ EXCELLENT : Vous respectez les recommandations de l'OMS. Le Coupon Sport vous aidera à maintenir ce rythme !";
+                className = "result-good";
+            } else if (sport < 60) {
+                message = "⚠️ ATTENTION : Votre niveau d'activité est insuffisant pour votre santé. Utilisez les 135€ pour vous inscrire en club d'urgence !";
+                className = "result-bad";
+            } else {
+                message = "👍 BIEN : Votre activité est correcte, mais soyez vigilant sur le temps d'écran qui reste élevé.";
+                className = "result-good";
+            }
+            resultatBox.textContent = message;
+            resultatBox.className = "result-box " + className;
+            resultatBox.style.display = "block";
+        }
+
+        // Gestion des Modales (Ouverture/Fermeture)
+        function openModal(id) {
+            document.getElementById(id).style.display = "flex";
+            document.body.style.overflow = "hidden";
+        }
+        function closeModal(id) {
+            document.getElementById(id).style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+        // Fermeture en cliquant en dehors
+        window.onclick = function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        }
+    </script>
+</body>
+</html>
